@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>EclipseVR</title>
+    </head>
+    <body>
+        <button onclick="stream();">Stream</button>
+
+        <video id="video"></video>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/socket.io-stream.js"></script>
+        <script>
+
+            
+            const socket = io();
+
+            
+            var canvas = document.createElement("canvas");
+
+            const vid = document.getElementById("video");
+
+            const displayMediaOptions = {
+                video: {
+                    displaySurface: "browser",
+                },
+                audio: {
+                    suppressLocalAudioPlayback: false,
+                },
+                preferCurrentTab: false,
+                selfBrowserSurface: "exclude",
+                systemAudio: "include",
+                surfaceSwitching: "include",
+                monitorTypeSurfaces: "include",
+            };
+
+            async function startCapture(displayMediaOptions) {
+                let captureStream = null;
+
+                try {
+                    captureStream =
+                    await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+                } catch (err) {
+                    console.error(`Error: ${err}`);
+                }
+                return captureStream;
+            }
+
+            async function stream() {
+                
+                var strem = await startCapture();
+                vid.srcObject = strem;
+                vid.play();
+
+                setTimeout(() => {
+                    
+                    canvas.width = vid.videoWidth;
+                    canvas.height = vid.videoHeight;
+                    var canvasContext = canvas.getContext("2d");
+                    
+                    setInterval(() => {
+                        canvasContext.drawImage(video, 0, 0);
+                        var url = canvas.toDataURL();
+
+                        socket.emit("share", btoa(url));
+
+                    }, 1000/240);
+
+                }, 1000);
+
+
+            }
+
+        </script>
+    </body>
+</html>
