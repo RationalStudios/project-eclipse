@@ -48,10 +48,10 @@ def main(host='24.2.138.255', port=5000):
 
 
 def ip2hash(addr):
-    return int2str(struct.unpack("!I", socket.inet_aton(addr))[0],64)
+    return int2str(struct.unpack("!I", socket.inet_aton(addr))[0],32)
 
 def hash2ip(addr):
-    return socket.inet_ntoa(struct.pack("!I", str2int(addr, 64)))
+    return socket.inet_ntoa(struct.pack("!I", str2int(addr, 32)))
 
 # localhost is 
 print("Localhost ip is " + ip2hash("127.0.0.1"))

@@ -1,0 +1,41 @@
+
+:root {
+
+    background: #000000;
+    color:white;
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+
+}
+
+body {
+    margin: 0 10vw;
+    background: #313131;
+    width: 80vw;
+    min-height: 100vh;
+    overflow: auto;
+}
+
+header {
+    background: #111;
+    height: 25px;
+    padding: 12.5px;
+    width: calc(100% - 25px);
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+header > button {
+    color:white;
+    background: black;
+
+    position: relative;
+    top: 12px;
+    min-width: 100px;
+    border: none;
+    border-radius: 10px 10px 0 0 ;
+}
+header > button.selected {
+    background: #313131;
+    border: blue solid 2px;
+    border-bottom: none;
+}

@@ -4,75 +4,31 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>EclipseVR</title>
+
+        <link rel="stylesheet" href="/css/style.css">
+        <script src="/js/script.js"></script>
+
     </head>
     <body>
-        <button onclick="stream();">Stream</button>
+        <header>
+            <b>EclipseVR</b>
 
-        <video id="video"></video>
+            <button onclick="selectTab(this)" id="tabbtn-status" class="selected">Status</button>
+            <button onclick="selectTab(this)" id="tabbtn-settings">Settings</button>
+        </header>
 
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="/js/socket.io-stream.js"></script>
-        <script>
+        <main>
+            <div id="tabcontent-status">
+                <b>EclipseVR IDIP: <b id="status_idip">...</b></b>
+            </div>
+            <div id="tabcontent-settings" style="display: none;">
+                settings here
+            </div>
+        </main>
 
-            
-            const socket = io();
+        <footer>
 
-            
-            var canvas = document.createElement("canvas");
+        </footer>
 
-            const vid = document.getElementById("video");
-
-            const displayMediaOptions = {
-                video: {
-                    displaySurface: "browser",
-                },
-                audio: {
-                    suppressLocalAudioPlayback: false,
-                },
-                preferCurrentTab: false,
-                selfBrowserSurface: "exclude",
-                systemAudio: "include",
-                surfaceSwitching: "include",
-                monitorTypeSurfaces: "include",
-            };
-
-            async function startCapture(displayMediaOptions) {
-                let captureStream = null;
-
-                try {
-                    captureStream =
-                    await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
-                } catch (err) {
-                    console.error(`Error: ${err}`);
-                }
-                return captureStream;
-            }
-
-            async function stream() {
-                
-                var strem = await startCapture();
-                vid.srcObject = strem;
-                vid.play();
-
-                setTimeout(() => {
-                    
-                    canvas.width = vid.videoWidth;
-                    canvas.height = vid.videoHeight;
-                    var canvasContext = canvas.getContext("2d");
-                    
-                    setInterval(() => {
-                        canvasContext.drawImage(video, 0, 0);
-                        var url = canvas.toDataURL();
-
-                        socket.emit("share", btoa(url));
-
-                    }, 1000/240);
-
-                }, 1000);
-
-
-            }
-
-        </script>
     </body>
 </html>
