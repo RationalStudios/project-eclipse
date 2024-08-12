@@ -41,8 +41,7 @@ def main(host='127.0.0.1', port=5000):
     try:
         print('Client Start.')
 
-        while True:
-            retreive_screenshot(sock)
+        retreive_screenshot(sock)
     finally:
         sock.close()
 
