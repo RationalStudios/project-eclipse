@@ -53,7 +53,7 @@ def main(host='0.0.0.0', port=5000):
                 # Display the picture
                 screen.blit(img, (0, 0))
                 pygame.display.flip()
-                clock.tick(60)
+                clock.tick(120)
         finally:
             conn.close()
 
